@@ -10,14 +10,14 @@ namespace graaf::algorithm {
 
 // Disjoint Set Union to maintain sets of vertices
 namespace detail {
-void do_make_set(vertex_id_t v,
+inline void do_make_set(vertex_id_t v,
                  std::unordered_map<vertex_id_t, vertex_id_t>& parent,
                  std::unordered_map<vertex_id_t, vertex_id_t>& rank) {
   parent[v] = v;
   rank[v] = 0;
 }
 
-vertex_id_t do_find_set(vertex_id_t vertex,
+inline vertex_id_t do_find_set(vertex_id_t vertex,
                         std::unordered_map<vertex_id_t, vertex_id_t>& parent) {
   if (vertex == parent[vertex]) {
     return vertex;
@@ -25,7 +25,7 @@ vertex_id_t do_find_set(vertex_id_t vertex,
   return parent[vertex] = do_find_set(parent[vertex], parent);
 }
 
-void do_merge_sets(vertex_id_t vertex_a, vertex_id_t vertex_b,
+inline void do_merge_sets(vertex_id_t vertex_a, vertex_id_t vertex_b,
                    std::unordered_map<vertex_id_t, vertex_id_t>& parent,
                    std::unordered_map<vertex_id_t, vertex_id_t>& rank) {
   vertex_a = do_find_set(vertex_a, parent);

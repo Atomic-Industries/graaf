@@ -40,9 +40,19 @@ using edge_id_t = std::pair<vertex_id_t, vertex_id_t>;
  *
  */
 template <class T>
+void mix(std::size_t& x) {
+  x ^= x >> 30;
+  x *= 0x1187F635151DADB9;
+  x ^= x >> 31;
+  x *= 0x1391B5EF476E9985;
+  x ^= x >> 32;
+}
+
+template <class T>
 inline void hash_combine(std::size_t& seed, const T& v) {
   std::hash<T> hasher;
-  seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  seed += 0x4a23fde8f5b7527f + hasher(v);
+  mix<T>(seed);
 }
 
 struct edge_id_hash {
