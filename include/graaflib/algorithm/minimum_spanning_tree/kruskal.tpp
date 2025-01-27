@@ -81,8 +81,15 @@ std::vector<edge_id_t> kruskal_minimum_spanning_tree(
 
   std::sort(edges_to_process.begin(), edges_to_process.end(),
             [](detail::edge_to_process<E>& e1, detail::edge_to_process<E>& e2) {
-              if (e1 != e2) return e1.get_weight() < e2.get_weight();
-              return e1.vertex_a < e2.vertex_a || e1.vertex_b < e2.vertex_b;
+              if (e1 != e2) {
+                return e1.get_weight() < e2.get_weight();
+              } else {
+                if (e1.vertex_a == e2.vertex_a) {
+                  return e1.vertex_b < e2.vertex_b;
+                } else {
+                  return e1.vertex_a < e2.vertex_a;
+                }
+              }
             });
 
   for (const auto& edge : edges_to_process) {
